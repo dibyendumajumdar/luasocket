@@ -64,14 +64,17 @@ if ( CMAKE_SYSTEM_NAME STREQUAL "SunOS" )
 	set ( LIB_SOCKET socket resolv rt )
 endif ( )
 
-ADD_LIBRARY(socket_core MODULE ${SRC_SOCKET})
+ADD_LIBRARY(socket_core SHARED ${SRC_SOCKET})
+set_target_properties(socket_core PROPERTIES PREFIX "")
 target_link_libraries(socket_core ${LIB_SOCKET} ${LUALIB})
 
-ADD_LIBRARY(mime_core MODULE src/mime.c)
+ADD_LIBRARY(mime_core SHARED src/mime.c)
+set_target_properties(mime_core PROPERTIES PREFIX "")
 target_link_libraries(mime_core ${LIB_SOCKET} ${LUALIB})
 
 if ( LUASOCKET_UNIX )
   ADD_LIBRARY(socket_unix MODULE ${UNIX_SOCKET})
+  set_target_properties(socket_unix PROPERTIES PREFIX "")
   target_link_libraries(socket_unix ${LIB_SOCKET} ${LUALIB})
 endif ()
 
